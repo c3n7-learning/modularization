@@ -25,16 +25,17 @@ class CheckoutController
                 $cartItems,
                 PayBuddy::make(),
                 $request->input('payment_token'),
-                $request->user()->id
+                $request->user()->id,
+                userEmail: $request->user()->email
             );
         } catch (PaymentFailedException) {
             throw ValidationException::withMessages([
-                'payment_token' => 'We could not complete your payment.'
+                'payment_token' => 'We could not complete your payment.',
             ]);
         }
 
         return response()->json([
-            'order_url' => $order->url()
+            'order_url' => $order->url(),
         ], 201);
     }
 }
