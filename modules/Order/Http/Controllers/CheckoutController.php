@@ -35,7 +35,6 @@ class CheckoutController
         }
 
         $order = Order::query()->create([
-            'payment_id' => $charge['id'],
             'status' => 'completed',
             'total_in_cents' => $orderTotalInCents,
             'user_id' => $request->user()->id
