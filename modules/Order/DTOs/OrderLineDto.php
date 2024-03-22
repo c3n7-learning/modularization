@@ -3,7 +3,6 @@
 namespace Modules\Order\DTOs;
 
 use Illuminate\Database\Eloquent\Collection;
-use Modules\Order\Models\Order;
 use Modules\Order\Models\OrderLine;
 
 readonly class OrderLineDto

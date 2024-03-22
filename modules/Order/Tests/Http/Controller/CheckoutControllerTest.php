@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Modules\Order\Mail\OrderReceived;
 use Modules\Order\Models\Order;
 use Modules\Order\Tests\OrderTestCase;
-use Modules\Payment\PayBuddy;
+use Modules\Payment\PayBuddySdk;
 use Modules\Product\Database\Factories\ProductFactory;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -29,7 +29,7 @@ class CheckoutControllerTest extends OrderTestCase
             )
         );
 
-        $paymentToken = PayBuddy::validToken();
+        $paymentToken = PayBuddySdk::validToken();
 
         $response = $this->actingAs($user)
             ->post(route('order::checkout', [
@@ -87,7 +87,7 @@ class CheckoutControllerTest extends OrderTestCase
     {
         $user = UserFactory::new()->create();
         $product = ProductFactory::new()->create();
-        $paymentToken = PayBuddy::invalidToken();
+        $paymentToken = PayBuddySdk::invalidToken();
 
         $response = $this->actingAs($user)
             ->postJson(route('order::checkout', [
