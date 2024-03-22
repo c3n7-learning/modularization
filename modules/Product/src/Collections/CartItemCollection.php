@@ -38,7 +38,8 @@ class CartItemCollection
 
     public function totalInCents(): int
     {
-        return $this->items->sum(fn(CartItem $cartItem) => $cartItem->quantity * $cartItem->product->priceInCents
+        return $this->items->sum(
+            fn (CartItem $cartItem) => $cartItem->quantity * $cartItem->product->priceInCents
         );
     }
 
