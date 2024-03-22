@@ -2,12 +2,12 @@
 
 namespace Modules\Order\DTOs;
 
-use Modules\Payment\PayBuddySdk;
+use Modules\Payment\PaymentGateway;
 
 readonly class PendingPayment
 {
     public function __construct(
-        public PayBuddySdk $provider,
+        public PaymentGateway $provider,
         public string $paymentToken,
     ) {
     }

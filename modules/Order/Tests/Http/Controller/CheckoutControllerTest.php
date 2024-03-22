@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Mail;
 use Modules\Order\Mail\OrderReceived;
 use Modules\Order\Models\Order;
 use Modules\Order\Tests\OrderTestCase;
+use Modules\Payment\PayBuddy;
 use Modules\Payment\PayBuddySdk;
+use Modules\Payment\PaymentProvider;
 use Modules\Product\Database\Factories\ProductFactory;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -20,7 +22,9 @@ class CheckoutControllerTest extends OrderTestCase
     #[Test]
     public function it_successfuly_creates_an_order(): void
     {
+        $this->withoutExceptionHandling();
         Mail::fake();
+        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
         $user = UserFactory::new()->create();
         $products = ProductFactory::new()->count(2)->create(
             new Sequence(
@@ -60,7 +64,7 @@ class CheckoutControllerTest extends OrderTestCase
         // Payment
         $payment = $order->lastPayment;
         $this->assertEquals('paid', $payment->status);
-        $this->assertEquals('PayBuddy', $payment->payment_gateway);
+        $this->assertEquals(PaymentProvider::PayBuddy, $payment->payment_gateway);
         $this->assertEquals(36, strlen($payment->payment_id));
         $this->assertEquals(60000, $payment->total_in_cents);
         $this->assertTrue($payment->user->is($user));
@@ -85,6 +89,7 @@ class CheckoutControllerTest extends OrderTestCase
     #[Test]
     public function it_fails_with_an_invalid_token(): void
     {
+        /** @var \Illuminate\Contracts\Auth\Authenticatable $user */
         $user = UserFactory::new()->create();
         $product = ProductFactory::new()->create();
         $paymentToken = PayBuddySdk::invalidToken();
