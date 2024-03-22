@@ -55,7 +55,8 @@
             "@php artisan key:generate --ansi"
         ],
         "ide": [
-            "@php artisan ide-helper:models --dir='modules'"
+            "@php artisan ide-helper:models --dir='modules' -N",
+            "@php artisan ide-helper:generate"
         ]
     },
     "extra": {
