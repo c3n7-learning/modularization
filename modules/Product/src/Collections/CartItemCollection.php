@@ -1,8 +1,10 @@
 <?php
 
-namespace Modules\Product;
+namespace Modules\Product\Collections;
 
 use Illuminate\Support\Collection;
+use Modules\Product\DTOs\CartItem;
+use Modules\Product\DTOs\ProductDto;
 use Modules\Product\Models\Product;
 
 class CartItemCollection
@@ -29,7 +31,8 @@ class CartItemCollection
 
     public function totalInCents(): int
     {
-        return $this->items->sum(fn (CartItem $cartItem) => $cartItem->quantity * $cartItem->product->priceInCents
+        return $this->items->sum(
+            fn (CartItem $cartItem) => $cartItem->quantity * $cartItem->product->priceInCents
         );
     }
 

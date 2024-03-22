@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\Payment\Payment;
 use Modules\Product\CartItem;
-use Modules\Product\CartItemCollection;
+use Modules\Product\Collections\CartItemCollection;
 use NumberFormatter;
 
 class Order extends Model
@@ -70,9 +70,6 @@ class Order extends Model
         ]);
     }
 
-    /**
-     * @param  \Modules\Product\CartItemCollection<CartItem>  $items
-     */
     public function addLinesFromCartItems(CartItemCollection $items): void
     {
         foreach ($items->items() as $item) {
